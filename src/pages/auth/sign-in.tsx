@@ -57,7 +57,7 @@ export function SignIn() {
             <h1 className="text-2xl font-semibold tracking-tight">
               Acessar painel
             </h1>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               Acompanhe suas vendas pelo painel parceiro!
             </p>
           </header>
@@ -74,7 +74,7 @@ export function SignIn() {
                 type="email"
               />
               {errors.email && (
-                <span className="text-muted-foreground text-sm">
+                <span className="text-sm text-muted-foreground">
                   {errors.email.message}
                 </span>
               )}

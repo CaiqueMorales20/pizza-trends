@@ -69,7 +69,7 @@ export function SignUp() {
             <h1 className="text-2xl font-semibold tracking-tight">
               Criar conta grátis
             </h1>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               Seja um parceiro e começe suas vendas!
             </p>
           </header>
@@ -86,7 +86,7 @@ export function SignUp() {
                 type="text"
               />
               {errors.restaurantName && (
-                <span className="text-muted-foreground text-sm">
+                <span className="text-sm text-muted-foreground">
                   {errors.restaurantName.message}
                 </span>
               )}
@@ -102,7 +102,7 @@ export function SignUp() {
                 type="text"
               />
               {errors.managerName && (
-                <span className="text-muted-foreground text-sm">
+                <span className="text-sm text-muted-foreground">
                   {errors.managerName.message}
                 </span>
               )}
@@ -118,7 +118,7 @@ export function SignUp() {
                 type="email"
               />
               {errors.email && (
-                <span className="text-muted-foreground text-sm">
+                <span className="text-sm text-muted-foreground">
                   {errors.email.message}
                 </span>
               )}
@@ -134,7 +134,7 @@ export function SignUp() {
                 type="tel"
               />
               {errors.phone && (
-                <span className="text-muted-foreground text-sm">
+                <span className="text-sm text-muted-foreground">
                   {errors.phone.message}
                 </span>
               )}
@@ -143,7 +143,7 @@ export function SignUp() {
               Acessar painel
             </Button>
 
-            <p className="text-muted-foreground px-6 text-center text-sm leading-relaxed">
+            <p className="px-6 text-center text-sm leading-relaxed text-muted-foreground">
               Ao continuar, você concorda com os nossos{' '}
               <a className="underline" href="">
                 termos de serviço
