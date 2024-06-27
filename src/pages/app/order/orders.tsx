@@ -1,25 +1,20 @@
 import { useQuery } from '@tanstack/react-query'
-import { Search, X } from 'lucide-react'
 import { Helmet } from 'react-helmet-async'
 import { useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import { getOrders } from '@/api/get-orders'
 import { Pagination } from '@/components/pagination'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 
+import { OrderForm } from './order-form'
 import { OrdersTable } from './orders-table'
 
 export function Orders() {
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const orderId = Number(searchParams.get('orderId'))
+  const customerName = searchParams.get('customerName')
+  const status = searchParams.get('status')
 
   const pageIndex = z.coerce
     .number()
@@ -27,8 +22,14 @@ export function Orders() {
     .parse(searchParams.get('page') ?? '1')
 
   const { data: result } = useQuery({
-    queryKey: ['orders', pageIndex],
-    queryFn: () => getOrders({ pageIndex }),
+    queryKey: ['orders', pageIndex, orderId, customerName, status],
+    queryFn: () =>
+      getOrders({
+        pageIndex,
+        orderId,
+        customerName,
+        status: status === 'all' ? null : status,
+      }),
   })
 
   function handlePaginate(pageIndex: number) {
@@ -44,39 +45,7 @@ export function Orders() {
       <Helmet title="Pedidos" />
       <h1 className="text-3xl font-bold tracking-tight">Pedidos</h1>
       <div className="space-y-6">
-        <form className="flex items-center gap-2">
-          <span className="text-sm font-semibold">Filtros:</span>
-          <Input placeholder="ID do pedido" className="h-8 w-[200px]" />
-
-          <Input placeholder="Nome do cliente" className="h-8 w-[320px]" />
-
-          <Select defaultValue="all">
-            <SelectTrigger className="h-8 w-[180px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos status</SelectItem>
-              <SelectItem value="pending">Pendente</SelectItem>
-              <SelectItem value="canceled">Cancelado</SelectItem>
-              <SelectItem value="processing">Em preparo</SelectItem>
-              <SelectItem value="delivering">Em entrega</SelectItem>
-              <SelectItem value="delivered">Entregue</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Button
-            type="submit"
-            variant={'secondary'}
-            size={'sm'}
-            className="h-8"
-          >
-            <Search className="mr-2 h-4 w-4" /> Filtrar resutlados
-          </Button>
-
-          <Button variant={'outline'} size={'sm'} className="h-8">
-            <X className="mr-2 h-4 w-4" /> Remover filtros
-          </Button>
-        </form>
+        <OrderForm />
 
         <div className="rounded-md border">
           {result && <OrdersTable orders={result.orders} meta={result.meta} />}
