@@ -16,3 +16,5 @@ export async function getManagedRestaurant() {
 
   return response.data
 }
+
+export type { GetManagedRestaurantResponse }
